@@ -36,8 +36,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Source Code Pro", monospace;
     line-height: 1;
-    background:white;
-    color: black;
+    color: ${(props) => props.theme.white.darker};
+    background-color:black;
   }
   ol, ul {
     list-style: none;

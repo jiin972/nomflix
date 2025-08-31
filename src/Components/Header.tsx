@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 import { motion, useAnimation, useScroll, type Variants } from "framer-motion";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Nav = styled(motion.nav)`
   width: 100%;
@@ -11,7 +12,7 @@ const Nav = styled(motion.nav)`
   position: fixed;
   width: 100%;
   top: 0;
-  height: 80px;
+  height: 60px;
   font-size: 14px;
   color: white;
   padding: 20px 60px;
@@ -80,7 +81,7 @@ const Circle = styled(motion.span)`
   margin: 0 auto;
 `;
 
-const Search = styled.span`
+const Search = styled.form`
   display: flex;
   align-items: center;
   position: relative;
@@ -111,6 +112,10 @@ const navVariants: Variants = {
   scroll: { backgroundColor: "rgba(0, 0, 0, 1)" },
 };
 
+interface IForm {
+  keyword: string;
+}
+
 function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const homeMatch = useMatch("/");
@@ -137,6 +142,12 @@ function Header() {
     });
     return () => unsubscribe();
   }, [navAnimation, scrollY]);
+  const history = useNavigate();
+  const { register, handleSubmit } = useForm<IForm>(); // 검색을 위한 useForm 사용
+  const onValid = (data: IForm) => {
+    console.log("data:", data);
+    history(`/search?keyword=${data.keyword}`);
+  };
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"up"}>
       <Col>
@@ -163,7 +174,7 @@ function Header() {
         </Items>
       </Col>
       <Col>
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={toggleSearch}
             animate={{ x: searchOpen ? -180 : 0 }}
@@ -179,6 +190,7 @@ function Header() {
             ></motion.path>
           </motion.svg>
           <Input
+            {...register("keyword", { required: true, minLength: 2 })}
             animate={inputAnimation}
             initial={{ scaleX: 0 }}
             transition={{ type: "tween" }}
