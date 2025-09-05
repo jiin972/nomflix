@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
     display: block;
   }
   body {
-    font-family: "Source Code Pro", monospace;
+    font-family:  'Helvetica Neue', Arial, sans-serif;
     line-height: 1;
     color: ${(props) => props.theme.white.darker};
     background-color:black;
