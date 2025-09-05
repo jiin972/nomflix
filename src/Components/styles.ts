@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 export const Wrapper = styled.div`
   background-color: black;
   /* overflow-x: hidden; */
+  padding: 10px;
 `;
 
 export const Loader = styled.div`

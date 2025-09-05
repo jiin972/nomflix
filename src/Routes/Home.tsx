@@ -84,7 +84,7 @@ function Home() {
                 style={{
                   position: "absolute",
                   top: "-40px",
-                  left: "20px",
+                  left: "0px",
                   fontSize: "28px",
                   fontWeight: "600",
                 }}
